@@ -3,20 +3,19 @@ import { generatePath } from 'react-router-dom'
 import TodosPage from '@/pages/todos'
 import TodoPage from '@/pages/todos/[todoId]'
 
-const routes = {
+export const routeByPattern = {
   '/': {
-    url: () => '/todos',
+    path: () => generatePath('/todos'),
     Component: TodosPage,
   },
   '/todos': {
-    url: () => '/todos',
+    path: () => generatePath('/todos'),
     Component: TodosPage,
   },
   '/todos/:todoId': {
-    url: ({ todoId }: { todoId: string }) =>
-      generatePath('/todos/:todoId', { todoId }),
+    path: ({ todoId }: { todoId: string }) => generatePath('/todos/:todoId', { todoId }),
     Component: TodoPage,
   },
 }
 
-export default routes
+export type Pattern = keyof typeof routeByPattern

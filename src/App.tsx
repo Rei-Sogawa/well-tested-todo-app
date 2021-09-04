@@ -1,38 +1,46 @@
+import { Box, ChakraProvider, Container, HStack, Link } from '@chakra-ui/react'
 import { VFC } from 'react'
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Link as ReactRouterLink, Route, Switch } from 'react-router-dom'
 
-import routes from '@/routes'
+import { Pattern, routeByPattern } from '@/routes'
 
 const Header: VFC = () => {
   return (
-    <div>
-      <ul>
-        <li>
-          <Link to={routes['/todos'].url()}>Todos</Link>
-        </li>
-        <li>
-          <Link to={routes['/todos/:todoId'].url({ todoId: '1' })}>Todo</Link>
-        </li>
-      </ul>
-    </div>
+    <Box bg="gray.800" color="white" fontWeight="bold" py="4">
+      <Container maxWidth="container.md">
+        <HStack spacing="4">
+          <Link
+            as={ReactRouterLink}
+            to={routeByPattern['/todos'].path()}
+            _focus={{ boxShadow: 'none' }}
+          >
+            Todos
+          </Link>
+        </HStack>
+      </Container>
+    </Box>
   )
 }
 
 const App: VFC = () => {
   return (
-    <Router>
-      <Header />
-      <Switch>
-        {Object.keys(routes).map((pattern, index) => {
-          const { Component } = routes[pattern as keyof typeof routes]
-          return (
-            <Route path={pattern} exact key={index}>
-              <Component />
-            </Route>
-          )
-        })}
-      </Switch>
-    </Router>
+    <ChakraProvider>
+      <Router>
+        <Header />
+        <Container maxWidth="container.md">
+          <Switch>
+            {Object.keys(routeByPattern).map((pattern, index) => {
+              const { Component } = routeByPattern[pattern as Pattern]
+              return (
+                <Route key={index} path={pattern} exact>
+                  <Component />
+                </Route>
+              )
+            })}
+          </Switch>
+        </Container>
+      </Router>
+    </ChakraProvider>
   )
 }
 
