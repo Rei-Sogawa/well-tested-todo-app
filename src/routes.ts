@@ -5,11 +5,11 @@ import TodoPage from '@/pages/todos/[todoId]'
 
 const routes = {
   '/': {
-    url: () => '/todos',
+    url: () => generatePath('/todos'),
     Component: TodosPage,
   },
   '/todos': {
-    url: () => '/todos',
+    url: () => generatePath('/todos'),
     Component: TodosPage,
   },
   '/todos/:todoId': {
