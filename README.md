@@ -14,7 +14,7 @@
     - todos/[id]
   - [x] routes.ts をいい感じに作る
 - [x] firebase の初期化
-- [ ] chakra ui の追加
+- [x] chakra ui の追加
 
 ## mvp-0
 
