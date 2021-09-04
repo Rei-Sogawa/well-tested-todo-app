@@ -1,5 +1,5 @@
 import { VFC } from 'react'
-import { BrowserRouter as Router, Link, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom'
 
 import routes from '@/routes'
 
@@ -23,9 +23,14 @@ const App: VFC = () => {
     <Router>
       <Header />
       <Switch>
-        {Object.keys(routes).map(
-          (pattern) => routes[pattern as keyof typeof routes].Component
-        )}
+        {Object.keys(routes).map((pattern, index) => {
+          const { Component } = routes[pattern as keyof typeof routes]
+          return (
+            <Route path={pattern} exact key={index}>
+              <Component />
+            </Route>
+          )
+        })}
       </Switch>
     </Router>
   )
