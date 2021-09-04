@@ -1,17 +1,17 @@
 import { VFC } from 'react'
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom'
 
-import routes from '@/routes'
+import { Pattern, routeByPattern } from '@/routes'
 
 const Header: VFC = () => {
   return (
     <div>
       <ul>
         <li>
-          <Link to={routes['/todos'].url()}>Todos</Link>
+          <Link to={routeByPattern['/todos'].path()}>Todos</Link>
         </li>
         <li>
-          <Link to={routes['/todos/:todoId'].url({ todoId: '1' })}>Todo</Link>
+          <Link to={routeByPattern['/todos/:todoId'].path({ todoId: '1' })}>Todo</Link>
         </li>
       </ul>
     </div>
@@ -23,10 +23,10 @@ const App: VFC = () => {
     <Router>
       <Header />
       <Switch>
-        {Object.keys(routes).map((pattern, index) => {
-          const { Component } = routes[pattern as keyof typeof routes]
+        {Object.keys(routeByPattern).map((pattern, index) => {
+          const { Component } = routeByPattern[pattern as Pattern]
           return (
-            <Route path={pattern} exact key={index}>
+            <Route key={index} path={pattern} exact>
               <Component />
             </Route>
           )
