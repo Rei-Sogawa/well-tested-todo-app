@@ -1,25 +1,33 @@
-import React from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { VFC } from 'react'
+import { BrowserRouter as Router, Link, Switch } from 'react-router-dom'
 
-function App() {
+import routes from '@/routes'
+
+const Header: VFC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ul>
+        <li>
+          <Link to={routes['/todos'].url()}>Todos</Link>
+        </li>
+        <li>
+          <Link to={routes['/todos/:todoId'].url({ todoId: '1' })}>Todo</Link>
+        </li>
+      </ul>
     </div>
+  )
+}
+
+const App: VFC = () => {
+  return (
+    <Router>
+      <Header />
+      <Switch>
+        {Object.keys(routes).map(
+          (pattern) => routes[pattern as keyof typeof routes].Component
+        )}
+      </Switch>
+    </Router>
   )
 }
 
