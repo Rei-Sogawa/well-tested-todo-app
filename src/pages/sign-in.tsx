@@ -2,11 +2,15 @@ import { Box } from '@chakra-ui/react'
 import { VFC } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { FormValues, UserRegistrationForm } from '@/components/UserRegistrationForm'
+import {
+  FormValues,
+  UserRegistrationForm,
+  UserRegistrationFormProps,
+} from '@/components/UserRegistrationForm'
 import { signIn } from '@/fb/auth'
 import { routeByPattern } from '@/routes'
 
-const SignInPage: VFC = () => {
+const Container: VFC = () => {
   const history = useHistory()
 
   const handleSubmit = async ({ email, password }: FormValues) => {
@@ -14,11 +18,19 @@ const SignInPage: VFC = () => {
     history.push(routeByPattern['/todos'].path())
   }
 
+  return <View onSubmit={handleSubmit} />
+}
+
+type ViewProps = {
+  onSubmit: UserRegistrationFormProps['onSubmit']
+}
+
+const View: VFC<ViewProps> = ({ onSubmit }) => {
   return (
     <Box w="md" mx="auto" mt="5">
-      <UserRegistrationForm submitButtonText="Sign In" onSubmit={handleSubmit} />
+      <UserRegistrationForm submitButtonText="Sign In" onSubmit={onSubmit} />
     </Box>
   )
 }
 
-export default SignInPage
+export default Container
