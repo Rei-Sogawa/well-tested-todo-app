@@ -1,10 +1,9 @@
-import { onAuthStateChanged } from 'firebase/auth'
 import { useEffect } from 'react'
 import { createContext, ReactNode, useContext, useState, VFC } from 'react'
 
-import { auth } from '@/firebaseApp'
+import { onAuthStateChanged } from '@/fb/auth'
 
-export type Value = {
+type Value = {
   uid: string | undefined
 }
 
@@ -14,11 +13,11 @@ type AuthProviderProps = {
   children: ReactNode
 }
 
-const AuthProvider: VFC<AuthProviderProps> = ({ children }) => {
+export const AuthProvider: VFC<AuthProviderProps> = ({ children }) => {
   const [value, setValue] = useState<Value>({ uid: undefined })
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged((user) => {
       setValue({ uid: user ? user.uid : undefined })
     })
   }, [])
@@ -26,7 +25,7 @@ const AuthProvider: VFC<AuthProviderProps> = ({ children }) => {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
-const useAuth = () => {
+export const useAuth = () => {
   const context = useContext(AuthContext)
   if (!context) {
     throw new Error('useAuth must be used within a AuthProvider')
@@ -35,5 +34,3 @@ const useAuth = () => {
   const isLoggedIn = !!uid
   return { uid, isLoggedIn }
 }
-
-export { AuthProvider, useAuth }

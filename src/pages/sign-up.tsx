@@ -1,17 +1,16 @@
 import { Box } from '@chakra-ui/react'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { VFC } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import { FormValues, UserRegistrationForm } from '@/components/UserRegistrationForm'
-import { auth } from '@/firebaseApp'
+import { signUp } from '@/fb/auth'
 import { routeByPattern } from '@/routes'
 
 const SignUpPage: VFC = () => {
   const history = useHistory()
 
-  const handleSubmit = async (formValues: FormValues) => {
-    await createUserWithEmailAndPassword(auth, formValues.email, formValues.password)
+  const handleSubmit = async ({ email, password }: FormValues) => {
+    await signUp({ email, password })
     history.push(routeByPattern['/todos'].path())
   }
 
