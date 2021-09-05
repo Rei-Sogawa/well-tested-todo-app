@@ -28,7 +28,8 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "craco eject"
+    "eject": "craco eject",
+    "fb:emulators:start:local-data": "firebase emulators:start --import=./emulator-data --export-on-exit"
   },
   "browserslist": {
     "production": [

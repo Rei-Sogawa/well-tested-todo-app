@@ -10,7 +10,7 @@ import {
 import { signUp } from '@/fb/auth'
 import { routeByPattern } from '@/routes'
 
-const Container: VFC = () => {
+const Index: VFC = () => {
   const history = useHistory()
 
   const handleSubmit = async ({ email, password }: FormValues) => {
@@ -33,4 +33,4 @@ const View: VFC<ViewProps> = ({ onSubmit }) => {
   )
 }
 
-export default Container
+export default Index

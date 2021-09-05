@@ -18,9 +18,21 @@ import { useAuth } from '@/contexts/auth'
 import { signOut } from '@/fb/auth'
 import { routeByPattern } from '@/routes'
 
-export const Header: VFC = () => {
+export const Index: VFC = () => {
   const { isLoggedIn } = useAuth()
+  const handleClickSignOut = () => signOut()
 
+  return <View isLoggedIn={isLoggedIn} onClickSignOut={handleClickSignOut} />
+}
+
+type ViewProps = {
+  isLoggedIn: boolean
+  onClickSignOut: () => Promise<void>
+}
+
+const View: VFC<ViewProps> = ({ isLoggedIn, onClickSignOut }) => {
+  // MEMO: Default の動作では、Header の外側をクリックしたときに close されない
+  //       親 component で minH="100vh" 設定したら直るかも
   const { isOpen, onClose, onToggle } = useDisclosure()
 
   const menuBodyRef = useRef<HTMLDivElement>(null)
@@ -29,7 +41,7 @@ export const Header: VFC = () => {
   })
 
   const handleClickSignOut = async () => {
-    await signOut()
+    await onClickSignOut()
     onClose()
   }
 

@@ -9,7 +9,7 @@ export type FormValues = {
 
 export type UserRegistrationFormProps = {
   submitButtonText: string
-  onSubmit: (formValues: FormValues) => Promise<void>
+  onSubmit: (values: FormValues) => Promise<void>
 }
 
 export const UserRegistrationForm: VFC<UserRegistrationFormProps> = ({
